@@ -10,47 +10,39 @@ project 1 - A Random Quote Generator
 /***
  * `quotes` array
 ***/
-let quote,
-    source,
-    citation,
-    year;
-
 let quotes = [
     {
       quote: 'Somewhere, something incredible is waiting to be known.',
       source: 'Carl Sagan',
-      citation: ,
-      year:
+      tags: 'science'
     },
     {
       quote: 'Science is not only compatible with spirituality; it is a profound source of spirituality.',
       source: 'Carl Sagan',
       citation: 'The Demon-Haunted World: Science as a Candle in the Dark',
-      year:
+      year: 1975,
+      tags: 'science'
     },
     {
       quote: 'The saddest aspect of life right now is that science gathers knowledge faster than society gathers wisdom.',
       source: 'Issav Asimov',
-      citation: ,
-      year:
+      tags: 'science fiction'
     },
     {
       quote: 'That\'\s hot.',
       source: 'Paris Hilton',
-      citation: 2000,
-      year:
+      year: 2000,
+      tags: 'life advice'
     },
     {
       quote: ' For I dipped into the Future, far as human eye could see; saw the vision of the world, and all the wonder that would be.',
-      source: 'Alfred, Lord Tennyson,',
-      citation: ,
+      source: 'Alfred, Lord Tennyson',
       year: 1842
     },
     {
       quote: 'Where there is no vision, the people perish.',
       source: 'Proverbs 29:18',
-      citation: ,
-      year:
+      tags: 'religion'
     },
 ];
 
@@ -59,12 +51,48 @@ let quotes = [
 /***
  * `getRandomQuote` function
 ***/
+const getRandomQuote = function(){
+    //find random number between 0 and quotes.length
+    let randomNumber = Math.floor(Math.random() * quotes.length);
 
-
+    //pick that object placement quotes. ex quotes[randomnumber]
+    //return that object
+    return quotes[randomNumber];
+};
 
 /***
  * `printQuote` function
 ***/
+const printQuote = function(){
+
+    //call getRandomQuote()
+    //store random quote in variable quoteObj
+    let quoteObj = getRandomQuote();
+
+    //present quote object properties as a jsx block to inject into quote-box div
+    let blockQuote = `
+        <p class="quote">${quoteObj.quote}</p>
+        <p class="source">${quoteObj.source}`;
+
+    //if a citation or year property exists, append to blockQuote
+    if(quoteObj.citation){
+        blockQuote+= `<span class="citation"> ${quoteObj.citation}</span>`;
+    }
+    if(quoteObj.year){
+        blockQuote+= `<span class="year"> ${quoteObj.year}</span>`
+    }
+    //if a tag exists, concatenate
+    //EXTRA CREDIT
+    if(quoteObj.tags){
+      blockQuote+= `<p><small>Tags: <em>${quoteObj.tags}</em></small></p>`
+    }
+
+    //close blockQuote paragraph
+    blockQuote += `</p>`
+
+    //replace code in quote-box with new code from blockQuote
+    document.getElementById('quote-box').innerHTML = blockQuote;
+};
 
 
 
